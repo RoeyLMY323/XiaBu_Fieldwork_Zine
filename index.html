@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Xiabu – The Social Life of a Factory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --max-width: 900px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .cover-wrapper {
+      position: relative;
+      max-width: var(--max-width);
+      width: 100%;
+      transition: opacity 1.2s ease;
+    }
+
+    .cover-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 第二张封面叠在第一张上，用于淡入 */
+    #img001 {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    #img00 {
+      opacity: 1;
+      transition: opacity 0.8s ease;
+    }
+
+    /* 00-1 抖动（慢速、幅度小） */
+    .shake {
+      animation: shake-slow 0.7s ease-in-out 0s 2;
+    }
+
+    @keyframes shake-slow {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-1deg); }
+      50%  { transform: rotate(1deg); }
+      75%  { transform: rotate(-0.6deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* 整个封面最后淡出 */
+    .fade-out-page {
+      opacity: 0;
+    }
+
+    /* 绳结区域点击区 */
+    .click-area {
+      position: absolute;
+      left: 27%;
+      top: 43%;
+      width: 20%;
+      height: 23%;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0);
+    }
+
+    .click-area:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hint {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: #777;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1.5rem 1rem; }
+      .hint { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cover-wrapper" id="coverWrapper">
+    <!-- 00 page -->
+    <img src="Zine/00 page.png" alt="Xiabu Zine Cover 00" id="img00" class="cover-img">
+    <!-- 00-1 page，叠在上面 -->
+    <img src="Zine/00-1 page.png" alt="Xiabu Zine Cover 00-1" id="img001" class="cover-img">
+
+    <!-- 绳结点击区域 -->
+    <a href="#" class="click-area" id="knotArea" title="Open Zine"></a>
+  </div>
+
+  <div class="hint">Tap the knot to enter</div>
+
+  <script>
+    const knotArea = document.getElementById('knotArea');
+    const img00    = document.getElementById('img00');
+    const img001   = document.getElementById('img001');
+    const wrapper  = document.getElementById('coverWrapper');
+
+    let activated = false;
+
+    knotArea.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (activated) return;
+      activated = true;
+
+      // 1. 00 page 淡出
+      img00.style.opacity = '0';
+
+      // 2. 00-1 慢慢出现
+      setTimeout(function () {
+        img001.style.opacity = '1';
+      }, 300);
+
+      // 3. 00-1 完全出现后抖动
+      setTimeout(function () {
+        img001.classList.add('shake');
+      }, 300 + 1400);
+
+      // 4. 抖动结束后整页淡出
+      setTimeout(function () {
+        wrapper.classList.add('fade-out-page');
+      }, 300 + 1400 + 1400);
+
+      // 5. 淡出结束后进入视频页
+      setTimeout(function () {
+        window.location.href = 'video.html';
+      }, 300 + 1400 + 1400 + 1400);
+    });
+  </script>
+
+</body>
+</html>
