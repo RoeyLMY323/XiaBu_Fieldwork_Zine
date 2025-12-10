@@ -8,7 +8,7 @@ This repository hosts the online version of the zine Xiabu: The Social Life of a
 
 View the full digital experience here:
 
-[https://roeylmy323.github.io/你的仓库名/](https://roeylmy323.github.io/XiaBu_Fieldwork_Zine/)
+(https://roeylmy323.github.io/XiaBu_Fieldwork_Zine/)
 
 📘 Project Overview
 
